@@ -1,0 +1,35 @@
+import 'package:flutter/material.dart';
+
+abstract final class AppColorScheme {
+  static const ColorScheme light = ColorScheme(
+    brightness: Brightness.light,
+    primary: Color(0xFF0A6D5E),
+    onPrimary: Color(0xFFFFFFFF),
+    primaryContainer: Color(0xFFA9F2E1),
+    onPrimaryContainer: Color(0xFF00201B),
+    secondary: Color(0xFF46635D),
+    onSecondary: Color(0xFFFFFFFF),
+    secondaryContainer: Color(0xFFC8E9E1),
+    onSecondaryContainer: Color(0xFF02201B),
+    tertiary: Color(0xFF3E6374),
+    onTertiary: Color(0xFFFFFFFF),
+    tertiaryContainer: Color(0xFFC2E8FC),
+    onTertiaryContainer: Color(0xFF001F2A),
+    error: Color(0xFFBA1A1A),
+    onError: Color(0xFFFFFFFF),
+    errorContainer: Color(0xFFFFDAD6),
+    onErrorContainer: Color(0xFF410002),
+    surface: Color(0xFFF4F7F5),
+    onSurface: Color(0xFF171D1B),
+    surfaceContainerHighest: Color(0xFFDCE5E1),
+    onSurfaceVariant: Color(0xFF3F4946),
+    outline: Color(0xFF6F7975),
+    outlineVariant: Color(0xFFBEC9C4),
+    shadow: Color(0xFF000000),
+    scrim: Color(0xFF000000),
+    inverseSurface: Color(0xFF2B322F),
+    onInverseSurface: Color(0xFFECF2EE),
+    inversePrimary: Color(0xFF8DD5C5),
+    surfaceTint: Color(0xFF0A6D5E),
+  );
+}
