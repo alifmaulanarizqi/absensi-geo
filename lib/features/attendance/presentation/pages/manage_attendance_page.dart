@@ -1,5 +1,7 @@
 import 'package:absensigeo/core/theme/app_color_scheme.dart';
 import 'package:absensigeo/core/theme/app_typography.dart';
+import 'package:absensigeo/features/attendance/data/models/attendance_log_item_model.dart';
+import 'package:absensigeo/shared/widgets/app_primary_button.dart';
 import 'package:flutter/material.dart';
 
 class ManageAttendancePage extends StatelessWidget {
@@ -90,18 +92,9 @@ class ManageAttendancePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              FilledButton(
+              AppPrimaryButton(
+                label: 'Absensi',
                 onPressed: () {},
-                style: FilledButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: colorScheme.primary,
-                  foregroundColor: colorScheme.onPrimary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  textStyle: textTheme.titleMedium,
-                ),
-                child: const Text('Absensi'),
               ),
             ],
           ),
@@ -111,30 +104,18 @@ class ManageAttendancePage extends StatelessWidget {
   }
 }
 
-class _AttendanceLogItem {
-  const _AttendanceLogItem({
-    required this.title,
-    required this.time,
-    required this.status,
-  });
-
-  final String title;
-  final String time;
-  final String status;
-}
-
-const List<_AttendanceLogItem> _attendanceLogs = [
-  _AttendanceLogItem(
+const List<AttendanceLogItemModel> _attendanceLogs = [
+  AttendanceLogItemModel(
     title: 'Kantor Pusat',
     time: '20 Mei 2026 08:03',
     status: 'Accepted',
   ),
-  _AttendanceLogItem(
+  AttendanceLogItemModel(
     title: 'Kantor Pusat',
     time: '19 Mei 2026 08:11',
     status: 'Accepted',
   ),
-  _AttendanceLogItem(
+  AttendanceLogItemModel(
     title: 'Warehouse',
     time: '18 Mei 2026 08:27',
     status: 'Rejected',

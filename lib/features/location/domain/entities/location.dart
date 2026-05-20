@@ -1,48 +1,27 @@
-import 'package:floor/floor.dart';
+import 'package:equatable/equatable.dart';
 
-@Entity(
-  tableName: 'locations',
-  indices: [
-    Index(value: ['name']),
-  ],
-)
-
-class LocationModel {
-  const LocationModel({
+class Location extends Equatable {
+  const Location({
     this.id,
     required this.name,
     required this.latitude,
     required this.longitude,
     required this.radiusMeter,
-    this.isActive = true,
+    required this.isActive,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  @primaryKey
-  @ColumnInfo(name: 'id')
   final int? id;
-
-  @ColumnInfo(name: 'name')
   final String name;
-  @ColumnInfo(name: 'latitude')
   final double latitude;
-  @ColumnInfo(name: 'longitude')
   final double longitude;
-
-  @ColumnInfo(name: 'radius_meter')
   final double radiusMeter;
-
-  @ColumnInfo(name: 'is_active')
   final bool isActive;
-
-  @ColumnInfo(name: 'created_at')
   final DateTime createdAt;
-
-  @ColumnInfo(name: 'updated_at')
   final DateTime updatedAt;
 
-  LocationModel copyWith({
+  Location copyWith({
     int? id,
     String? name,
     double? latitude,
@@ -52,7 +31,7 @@ class LocationModel {
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
-    return LocationModel(
+    return Location(
       id: id ?? this.id,
       name: name ?? this.name,
       latitude: latitude ?? this.latitude,
@@ -63,4 +42,16 @@ class LocationModel {
       updatedAt: updatedAt ?? this.updatedAt,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        name,
+        latitude,
+        longitude,
+        radiusMeter,
+        isActive,
+        createdAt,
+        updatedAt,
+      ];
 }

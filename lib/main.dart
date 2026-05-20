@@ -1,11 +1,21 @@
-import 'package:absensigeo/core/theme/app_color_scheme.dart';
-import 'package:absensigeo/core/theme/app_typography.dart';
+import 'package:absensigeo/core/database/app_database.dart';
+import 'package:absensigeo/core/di/service_locator.dart';
 import 'package:absensigeo/core/navigation/app_router.dart';
 import 'package:absensigeo/core/services/location_permission_service.dart';
+import 'package:absensigeo/core/theme/app_color_scheme.dart';
+import 'package:absensigeo/core/theme/app_typography.dart';
 import 'package:absensigeo/shared/widgets/home_action_card.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final database = await $FloorAppDatabase.databaseBuilder(
+    'absensigeo.db',
+  ).build();
+
+  setupServiceLocator(database);
+
   runApp(const AbsensiGeoApp());
 }
 
@@ -131,7 +141,7 @@ class _ProjectBootstrapPageState extends State<ProjectBootstrapPage> {
               ),
             ],
           ),
-        )
+        ),
       ),
     );
   }
