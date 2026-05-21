@@ -201,21 +201,6 @@ class _$LocationDao extends LocationDao {
   }
 
   @override
-  Future<LocationModel?> findById(int id) async {
-    return _queryAdapter.query('SELECT * FROM locations WHERE id = ?1 LIMIT 1',
-        mapper: (Map<String, Object?> row) => LocationModel(
-            id: row['id'] as int?,
-            name: row['name'] as String,
-            latitude: row['latitude'] as double,
-            longitude: row['longitude'] as double,
-            radiusMeter: row['radius_meter'] as double,
-            isActive: (row['is_active'] as int) != 0,
-            createdAt: _dateTimeConverter.decode(row['created_at'] as String),
-            updatedAt: _dateTimeConverter.decode(row['updated_at'] as String)),
-        arguments: [id]);
-  }
-
-  @override
   Future<int> insertLocation(LocationModel location) {
     return _locationModelInsertionAdapter.insertAndReturnId(
         location, OnConflictStrategy.abort);
@@ -277,14 +262,6 @@ class _$AttendanceLogDao extends AttendanceLogDao {
             status: _attendanceStatusConverter.decode(row['status'] as String),
             rejectionReason: row['rejection_reason'] as String?,
             createdAt: _dateTimeConverter.decode(row['created_at'] as String)));
-  }
-
-  @override
-  Future<List<AttendanceLogModel>> findByLocationId(int locationId) async {
-    return _queryAdapter.queryList(
-        'SELECT * FROM attendance_logs WHERE location_id = ?1 ORDER BY attendance_time DESC',
-        mapper: (Map<String, Object?> row) => AttendanceLogModel(id: row['id'] as int?, locationId: row['location_id'] as int, attendanceTime: _dateTimeConverter.decode(row['attendance_time'] as String), userLatitude: row['user_latitude'] as double, userLongitude: row['user_longitude'] as double, gpsAccuracyMeter: row['gps_accuracy_meter'] as double, distanceMeter: row['distance_meter'] as double, allowedRadiusMeter: row['allowed_radius_meter'] as double, status: _attendanceStatusConverter.decode(row['status'] as String), rejectionReason: row['rejection_reason'] as String?, createdAt: _dateTimeConverter.decode(row['created_at'] as String)),
-        arguments: [locationId]);
   }
 
   @override

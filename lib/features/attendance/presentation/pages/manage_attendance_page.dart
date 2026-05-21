@@ -3,13 +3,13 @@ import 'package:absensigeo/core/error/failure.dart';
 import 'package:absensigeo/core/navigation/app_router.dart';
 import 'package:absensigeo/core/theme/app_color_scheme.dart';
 import 'package:absensigeo/core/theme/app_typography.dart';
+import 'package:absensigeo/core/utils/app_date_time_formatter.dart';
 import 'package:absensigeo/features/attendance/domain/entities/attendance_log.dart';
 import 'package:absensigeo/features/attendance/presentation/bloc/manage_attendance/manage_attendance_bloc.dart';
 import 'package:absensigeo/shared/widgets/app_primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:intl/intl.dart';
 
 class ManageAttendancePage extends StatelessWidget {
   const ManageAttendancePage({super.key});
@@ -363,7 +363,7 @@ class _ManageAttendanceView extends StatelessWidget {
   }
 
   String _formatDateTime(DateTime value) {
-    return DateFormat('dd/MM/yyyy HH:mm').format(value);
+    return AppDateTimeFormatter.formatDateTimeUtcPlus7(value);
   }
 
   String _formatDistance(double meter) {
