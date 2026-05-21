@@ -1,6 +1,6 @@
 import 'package:absensigeo/core/error/failure.dart';
+import 'package:absensigeo/features/location/data/repositories/location_repository.dart';
 import 'package:absensigeo/features/location/domain/entities/location.dart';
-import 'package:absensigeo/features/location/domain/repositories/location_repository.dart';
 import 'package:dartz/dartz.dart';
 
 class GetLocationsUseCase {

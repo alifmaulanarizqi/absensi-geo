@@ -3,17 +3,17 @@ import 'package:absensigeo/core/error/failure.dart';
 import 'package:absensigeo/features/location/data/datasources/location_device_data_source.dart';
 import 'package:absensigeo/features/location/data/datasources/location_local_data_source.dart';
 import 'package:absensigeo/features/location/data/mappers/location_mapper.dart';
+import 'package:absensigeo/features/location/data/repositories/location_repository.dart';
 import 'package:absensigeo/features/location/domain/entities/location.dart';
 import 'package:absensigeo/features/location/domain/entities/location_coordinate.dart';
-import 'package:absensigeo/features/location/domain/repositories/location_repository.dart';
 import 'package:dartz/dartz.dart';
 
 class LocationRepositoryImpl implements LocationRepository {
   const LocationRepositoryImpl({
     required LocationLocalDataSource localDataSource,
     required LocationDeviceDataSource deviceDataSource,
-  })  : _localDataSource = localDataSource,
-        _deviceDataSource = deviceDataSource;
+  }) : _localDataSource = localDataSource,
+       _deviceDataSource = deviceDataSource;
 
   static const double _defaultRadiusMeter = 50;
 
@@ -24,16 +24,9 @@ class LocationRepositoryImpl implements LocationRepository {
   Future<Either<Failure, List<Location>>> getLocations() async {
     try {
       final locations = await _localDataSource.getLocations();
-      return Right(
-        locations.map((location) => location.toEntity()).toList(),
-      );
+      return Right(locations.map((location) => location.toEntity()).toList());
     } on AppException catch (exception) {
-      return Left(
-        Failure(
-          exception.message,
-          code: exception.code,
-        ),
-      );
+      return Left(Failure(exception.message, code: exception.code));
     } on Exception {
       return const Left(Failure('Gagal memuat daftar lokasi.'));
     }
@@ -45,12 +38,7 @@ class LocationRepositoryImpl implements LocationRepository {
       final coordinate = await _deviceDataSource.getCurrentLocation();
       return Right(coordinate);
     } on AppException catch (exception) {
-      return Left(
-        Failure(
-          exception.message,
-          code: exception.code,
-        ),
-      );
+      return Left(Failure(exception.message, code: exception.code));
     } on Exception {
       return const Left(Failure('Gagal mengambil lokasi saat ini.'));
     }
@@ -65,13 +53,11 @@ class LocationRepositoryImpl implements LocationRepository {
       final existingLocations = await _localDataSource.getLocations();
       final now = DateTime.now();
 
-      for (final existingLocation
-          in existingLocations.where((location) => location.isActive)) {
+      for (final existingLocation in existingLocations.where(
+        (location) => location.isActive,
+      )) {
         await _localDataSource.updateLocation(
-          existingLocation.copyWith(
-            isActive: false,
-            updatedAt: now,
-          ),
+          existingLocation.copyWith(isActive: false, updatedAt: now),
         );
       }
 
@@ -89,16 +75,9 @@ class LocationRepositoryImpl implements LocationRepository {
         location.toModel(),
       );
 
-      return Right(
-        location.copyWith(id: insertedId),
-      );
+      return Right(location.copyWith(id: insertedId));
     } on AppException catch (exception) {
-      return Left(
-        Failure(
-          exception.message,
-          code: exception.code,
-        ),
-      );
+      return Left(Failure(exception.message, code: exception.code));
     } on Exception {
       return const Left(Failure('Gagal menyimpan lokasi.'));
     }
@@ -120,22 +99,14 @@ class LocationRepositoryImpl implements LocationRepository {
 
         if (location.isActive != nextIsActive) {
           await _localDataSource.updateLocation(
-            location.copyWith(
-              isActive: nextIsActive,
-              updatedAt: now,
-            ),
+            location.copyWith(isActive: nextIsActive, updatedAt: now),
           );
         }
       }
 
       return Right(unit);
     } on AppException catch (exception) {
-      return Left(
-        Failure(
-          exception.message,
-          code: exception.code,
-        ),
-      );
+      return Left(Failure(exception.message, code: exception.code));
     } on Exception {
       return const Left(Failure('Gagal memperbarui lokasi aktif.'));
     }

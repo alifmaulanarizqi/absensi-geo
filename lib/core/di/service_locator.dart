@@ -3,8 +3,8 @@ import 'package:absensigeo/core/database/dao/location_dao.dart';
 import 'package:absensigeo/core/services/location_permission_service.dart';
 import 'package:absensigeo/features/location/data/datasources/location_device_data_source.dart';
 import 'package:absensigeo/features/location/data/datasources/location_local_data_source.dart';
+import 'package:absensigeo/features/location/data/repositories/location_repository.dart';
 import 'package:absensigeo/features/location/data/repositories/location_repository_impl.dart';
-import 'package:absensigeo/features/location/domain/repositories/location_repository.dart';
 import 'package:absensigeo/features/location/domain/usecases/create_location.dart';
 import 'package:absensigeo/features/location/domain/usecases/get_current_location.dart';
 import 'package:absensigeo/features/location/domain/usecases/get_locations.dart';
@@ -31,9 +31,8 @@ void setupServiceLocator(AppDatabase database) {
     () => FloorLocationLocalDataSource(serviceLocator()),
   );
   serviceLocator.registerLazySingleton<LocationDeviceDataSource>(
-    () => GeolocatorLocationDeviceDataSource(
-      permissionService: serviceLocator(),
-    ),
+    () =>
+        GeolocatorLocationDeviceDataSource(permissionService: serviceLocator()),
   );
   serviceLocator.registerLazySingleton<LocationRepository>(
     () => LocationRepositoryImpl(

@@ -1,7 +1,7 @@
 import 'package:absensigeo/core/error/failure.dart';
+import 'package:absensigeo/features/location/data/repositories/location_repository.dart';
 import 'package:absensigeo/features/location/domain/entities/location.dart';
 import 'package:absensigeo/features/location/domain/entities/location_coordinate.dart';
-import 'package:absensigeo/features/location/domain/repositories/location_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
@@ -14,9 +14,7 @@ class CreateLocationUseCase {
     final trimmedName = params.name.trim();
 
     if (trimmedName.isEmpty) {
-      return Future.value(
-        const Left(Failure('Nama lokasi wajib diisi.')),
-      );
+      return Future.value(const Left(Failure('Nama lokasi wajib diisi.')));
     }
 
     return _repository.createLocation(
@@ -27,17 +25,11 @@ class CreateLocationUseCase {
 }
 
 class CreateLocationParams extends Equatable {
-  const CreateLocationParams({
-    required this.name,
-    required this.coordinate,
-  });
+  const CreateLocationParams({required this.name, required this.coordinate});
 
   final String name;
   final LocationCoordinate coordinate;
 
   @override
-  List<Object?> get props => [
-        name,
-        coordinate,
-      ];
+  List<Object?> get props => [name, coordinate];
 }
